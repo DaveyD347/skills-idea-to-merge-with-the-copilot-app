@@ -10,12 +10,19 @@ import {
 
 test('normalizes bare domains and preserves HTTP(S) URLs', () => {
   assert.equal(normalizeUrl(' example.com/path '), 'https://example.com/path');
+  assert.equal(normalizeUrl('example.com'), normalizeUrl('https://example.com'));
   assert.equal(normalizeUrl('http://example.com'), 'http://example.com/');
   assert.equal(normalizeUrl('https://Example.com'), 'https://example.com/');
+  assert.equal(normalizeUrl('localhost:4321'), 'https://localhost:4321/');
+  assert.equal(normalizeUrl('example.com:4321'), 'https://example.com:4321/');
 });
 
 test('rejects empty, malformed, and non-HTTP(S) URLs', () => {
-  for (const value of ['', '   ', 'javascript://alert(1)', 'http://', 'https://exa mple.com']) {
+  for (const value of [
+    '', '   ', 'javascript://alert(1)', 'javascript:alert(1)',
+    'mailto:user@example.com', 'data:text/plain,hello',
+    'http://', 'https://exa mple.com',
+  ]) {
     assert.throws(() => normalizeUrl(value));
   }
 });

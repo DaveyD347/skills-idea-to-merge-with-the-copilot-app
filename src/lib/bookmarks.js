@@ -10,7 +10,9 @@ export function normalizeUrl(value) {
   }
 
   const input = value.trim();
-  const protocol = input.match(/^([a-z][a-z\d+.-]*):\/\//i)?.[1]?.toLowerCase();
+  const scheme = input.match(/^([a-z][a-z\d+.-]*):/i)?.[1]?.toLowerCase();
+  const isBareHostWithPort = /^(?:localhost|(?:[a-z\d](?:[a-z\d-]*[a-z\d])?\.)+[a-z\d](?:[a-z\d-]*[a-z\d])?):\d+(?:[/?#]|$)/i.test(input);
+  const protocol = isBareHostWithPort ? null : scheme;
   if (protocol && protocol !== 'http' && protocol !== 'https') {
     throw new TypeError('Only HTTP(S) URLs are supported.');
   }
