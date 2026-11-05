@@ -7,7 +7,7 @@ const { title = "Mona's Bookmark Manager App" } = Astro.props;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
-    <style>
+    <style is:global>
       /* Monaspace webfonts (GitHub Next, SIL OFL 1.1) self-hosted from /public/fonts.
          Neon carries body text; Xenon gives headings a touch of contrast.
          Self-hosting keeps the app fully offline-capable — no runtime CDN needed;
@@ -59,16 +59,21 @@ const { title = "Mona's Bookmark Manager App" } = Astro.props;
         --font-head: 'Monaspace Xenon', 'Monaspace Neon', ui-monospace, monospace;
       }
       * { box-sizing: border-box; }
+      html {
+        min-height: 100%;
+        background:
+          radial-gradient(ellipse at 10% 0%, #f8e5eb 0, transparent 38rem) no-repeat fixed,
+          linear-gradient(160deg, #fffaf7 0%, #fff 62%) no-repeat fixed;
+      }
       body {
         font-family: var(--font-body);
         line-height: 1.5;
         max-width: 46rem;
+        min-height: 100vh;
         margin: 0 auto;
         padding: 3rem 1.25rem 4rem;
         color: #38252d;
-        background:
-          radial-gradient(ellipse at 10% 0%, #f8e5eb 0, transparent 38rem),
-          linear-gradient(160deg, #fffaf7 0%, #fff 62%);
+        background: transparent;
       }
       header { margin-bottom: 1.75rem; }
       h1 { margin: 0 0 0.35rem; font-size: clamp(1.5rem, 5vw, 2rem); font-family: var(--font-head); letter-spacing: -0.02em; }
